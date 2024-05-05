@@ -1,4 +1,6 @@
 # ExpNo:10 Implementation of Classical Planning Algorithm
+# Aim:
+To implement the Classical Planning Algorithm.               DATE: 17.04.2024
 # Algorithm or Steps Involved:
 <ol>
   <li>Define the initial state</li>
@@ -6,7 +8,36 @@
   <li>Define the actions</li>
   <li>Find a <b>plan</b> to reach the goal state</li>
   <li>Print the plan</li>
-</ol>
+
+# Program:
+```
+def is_goal_state(current_state, goal_state):
+    return current_state == goal_state
+def apply_action(current_state, action_effect):
+    new_state = current_state.copy()
+    new_state.update(action_effect)
+    return new_state
+def find_plan(initial_state, goal_state, actions):
+    queue = [(initial_state, [])]
+    visited_states = set()
+    while queue:
+        current_state, partial_plan = queue.pop(0)
+        if is_goal_state(current_state, goal_state):
+            return partial_plan
+        if tuple(current_state.items()) in visited_states:
+            continue
+        visited_states.add(tuple(current_state.items()))
+        for action in actions:
+            if is_applicable(current_state, actions[action]['precondition']):
+                next_state = apply_action(current_state, actions[action]['effect'])
+                queue.append((next_state, partial_plan + [action]))
+    print("No plan exists.")
+    return None
+def is_applicable(current_state, precondition):
+    return all(current_state.get(key) == value for key, value in precondition.items())
+```
+Developed By: Sharon Harshini L M <BR>
+Register No : 212223040193
 
 # Example - 1
 ```
@@ -44,5 +75,5 @@ print(plan)
 ['move_A_to_B', 'move_B_to_C']
 ```
 
-# Please Prepare Solution or Definition For the method find_plan(initial_state, goal_state, actions)
-<h3>You Can use any of the searching Strategies for planning and executing a sequence of actions.<br> You can also look in to the Code given in the Repository.</h3>
+# Result:
+Therefore,Implementation of Classical Planning Algorithm is implemetated successfully.
